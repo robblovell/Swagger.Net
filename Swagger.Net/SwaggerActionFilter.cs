@@ -49,6 +49,16 @@ namespace Swagger.Net
                     apiControllerName.ToUpper().Equals(SwaggerGen.SWAGGER.ToUpper())) 
                     continue;
 
+                if (api.Route.Defaults.ContainsKey("Base") ||
+                    apiControllerName.ToUpper().Equals("BASE"))
+                    continue;
+
+                if (apiControllerName.ToUpper().Equals("ADMIN"))
+                    continue;
+
+                if (apiControllerName.ToUpper().Equals("DEVICE"))
+                    continue;
+
                 // Make sure we only report the current controller docs
                 if (!apiControllerName.Equals(actionContext.ControllerContext.ControllerDescriptor.ControllerName))
                     continue;

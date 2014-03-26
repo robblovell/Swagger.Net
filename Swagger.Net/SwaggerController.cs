@@ -28,6 +28,16 @@ namespace Swagger.Net
                 if (uniqueControllers.Contains(controllerName) ||
                       controllerName.ToUpper().Equals(SwaggerGen.SWAGGER.ToUpper())) continue;
 
+                if (api.Route.Defaults.ContainsKey("Base") ||
+                    controllerName.ToUpper().Equals("BASE"))
+                    continue;
+
+                if (controllerName.ToUpper().Equals("ADMIN"))
+                    continue;
+
+                if (controllerName.ToUpper().Equals("DEVICE"))
+                    continue;
+
                 uniqueControllers.Add(controllerName);
 
                 ResourceApi rApi = SwaggerGen.CreateResourceApi(api);
