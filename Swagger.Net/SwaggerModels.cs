@@ -77,13 +77,16 @@ namespace Swagger.Net
         /// <returns>An api operation</returns>
         public static ResourceApiOperation CreateResourceApiOperation(ApiDescription api, XmlCommentDocumentationProvider docProvider)
         {
+            var parts = docProvider.GetNotes(api.ActionDescriptor).Split(new string[] { "schema=" }, StringSplitOptions.None);
+            
             ResourceApiOperation rApiOperation = new ResourceApiOperation()
             {
                 httpMethod = api.HttpMethod.ToString(),
                 nickname = docProvider.GetNickname(api.ActionDescriptor),
                 responseClass = docProvider.GetResponseClass(api.ActionDescriptor),
                 summary = api.Documentation,
-                notes = docProvider.GetNotes(api.ActionDescriptor),
+                notes = parts[0],
+                schema = parts.Length > 1 ? parts[1] : "",
                 parameters = new List<ResourceApiOperationParameter>()
             };
 
@@ -136,6 +139,8 @@ namespace Swagger.Net
         public string responseClass { get; set; }
         public string summary { get; set; }
         public string notes { get; set; }
+
+        public string schema { get; set; }
         public List<ResourceApiOperationParameter> parameters { get; set; }
     }
 
