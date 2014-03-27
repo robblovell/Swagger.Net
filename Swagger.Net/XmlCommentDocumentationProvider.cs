@@ -42,7 +42,7 @@ namespace Swagger.Net
                 }
             }
 
-            return "No Documentation Found.";
+            return "No Parameter Documentation Found.";
         }
 
         public virtual bool GetRequired(HttpParameterDescriptor parameterDescriptor)
@@ -67,8 +67,7 @@ namespace Swagger.Net
                     return summaryNode.Value.Trim();
                 }
             }
-
-            return "No Documentation Found.";
+            return "No Descriptor Documentation Found.";
         }
 
         public virtual string GetNotes(HttpActionDescriptor actionDescriptor)
@@ -83,7 +82,7 @@ namespace Swagger.Net
                 }
             }
 
-            return "No Documentation Found.";
+            return "No Documentation Notes Found.";
         }
 
         public virtual string GetResponseClass(HttpActionDescriptor actionDescriptor)
