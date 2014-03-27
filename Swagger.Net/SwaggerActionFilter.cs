@@ -63,6 +63,9 @@ namespace Swagger.Net
                 if (!apiControllerName.Equals(actionContext.ControllerContext.ControllerDescriptor.ControllerName))
                     continue;
 
+                if (docProvider.GetNickname(api.ActionDescriptor).Contains("Docs"))
+                    continue;
+
                 ResourceApi rApi = SwaggerGen.CreateResourceApi(api);
                 r.apis.Add(rApi);
 
