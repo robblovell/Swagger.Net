@@ -56,6 +56,9 @@ namespace Swagger.Net
                 if (apiControllerName.ToUpper().Equals("ADMIN"))
                     continue;
 
+                if (apiControllerName.ToUpper().Equals("DEFAULT"))
+                    continue;
+
                 if (apiControllerName.ToUpper().Equals("DEVICE"))
                     continue;
 
