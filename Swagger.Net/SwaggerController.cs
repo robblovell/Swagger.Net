@@ -21,25 +21,15 @@ namespace Swagger.Net
 
             ResourceListing r = SwaggerGen.CreateResourceListing(ControllerContext);
             List<string> uniqueControllers = new List<string>();
+            //TODO:: move this to configuration or metadata.
+            uniqueControllers.Add("Base");
+            uniqueControllers.Add("Default");
 
             foreach (var api in GlobalConfiguration.Configuration.Services.GetApiExplorer().ApiDescriptions)
             {
                 string controllerName = api.ActionDescriptor.ControllerDescriptor.ControllerName;
                 if (uniqueControllers.Contains(controllerName) ||
                       controllerName.ToUpper().Equals(SwaggerGen.SWAGGER.ToUpper())) continue;
-
-                if (api.Route.Defaults.ContainsKey("Base") ||
-                    controllerName.ToUpper().Equals("BASE"))
-                    continue;
-
-                if (controllerName.ToUpper().Equals("ADMIN"))
-                    continue;
-
-                if (controllerName.ToUpper().Equals("DEFAULT"))
-                    continue;
-
-                if (controllerName.ToUpper().Equals("DEVICE"))
-                    continue;
 
                 uniqueControllers.Add(controllerName);
 
