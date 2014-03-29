@@ -17,6 +17,8 @@ namespace Swagger.Net
         public const string QUERY = "query";
         public const string PATH = "path";
         public const string BODY = "body";
+        //TODO:: move this to configuration or metadata.
+        public const string API_VERSION = "0.0.1";
 
         /// <summary>
         /// Create a resource listing
@@ -41,7 +43,7 @@ namespace Swagger.Net
 
             ResourceListing rl = new ResourceListing()
             {
-                apiVersion = Assembly.GetCallingAssembly().GetType().Assembly.GetName().Version.ToString(),
+                apiVersion = API_VERSION,  //TODO:: move this to a configuration item? Assembly.GetCallingAssembly().GetType().Assembly.GetName().Version.ToString(),
                 swaggerVersion = SWAGGER_VERSION,
                 basePath = uri.GetLeftPart(UriPartial.Authority) + HttpRuntime.AppDomainAppVirtualPath.TrimEnd('/'),
                 apis = new List<ResourceApi>()
@@ -69,25 +71,48 @@ namespace Swagger.Net
             return rApi;
         }
 
+        private static string GetCustomAttributesAsString(object [] actionDescriptor)
+        {
+            string _attributes = "";
+            foreach (var attribute in actionDescriptor)
+            {
+                if (attribute.ToString().Contains("Restricted"))
+                    _attributes += "[restricted]";
+                else if (attribute.ToString().Contains("UserAndAppAuthorize"))
+                    _attributes += "[auth:app & user]";
+                else if (attribute.ToString().Contains("AppAuthorize"))
+                        _attributes += "[auth:app]";
+                else if (attribute.ToString().Contains("Experimental"))
+                        _attributes += "[experimental]";
+            }
+            return _attributes;
+        }
+
         /// <summary>
         /// Creates an api operation
         /// </summary>
         /// <param name="api">Description of the api via the ApiExplorer</param>
         /// <param name="docProvider">Access to the XML docs written in code</param>
         /// <returns>An api operation</returns>
-        public static ResourceApiOperation CreateResourceApiOperation(ApiDescription api, XmlCommentDocumentationProvider docProvider)
+        public static ResourceApiOperation CreateResourceApiOperation(ApiDescription api,
+            XmlCommentDocumentationProvider docProvider, HttpControllerDescriptor controllerDescriptor)
+
         {
             var parts = docProvider.GetNotes(api.ActionDescriptor).Split(new string[] { "schema=" }, StringSplitOptions.None);
+            ReflectedHttpActionDescriptor actionDescriptor = (api.ActionDescriptor as ReflectedHttpActionDescriptor);
+            string _attributes = "";
+            _attributes += GetCustomAttributesAsString(actionDescriptor.MethodInfo.GetCustomAttributes(true));
+            _attributes += GetCustomAttributesAsString(controllerDescriptor.ControllerType.GetCustomAttributes(true));
             
             ResourceApiOperation rApiOperation = new ResourceApiOperation()
             {
                 httpMethod = api.HttpMethod.ToString(),
                 nickname = docProvider.GetNickname(api.ActionDescriptor),
                 responseClass = docProvider.GetResponseClass(api.ActionDescriptor),
-                summary = api.Documentation,
+                summary = api.Documentation+" "+_attributes,
                 notes = parts[0],
                 schema = parts.Length > 1 ? parts[1] : "",
-                parameters = new List<ResourceApiOperationParameter>()
+                parameters = new List<ResourceApiOperationParameter>(),
             };
 
             return rApiOperation;
@@ -141,6 +166,7 @@ namespace Swagger.Net
         public string notes { get; set; }
 
         public string schema { get; set; }
+  
         public List<ResourceApiOperationParameter> parameters { get; set; }
     }
 

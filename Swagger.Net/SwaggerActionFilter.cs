@@ -49,18 +49,8 @@ namespace Swagger.Net
                     apiControllerName.ToUpper().Equals(SwaggerGen.SWAGGER.ToUpper())) 
                     continue;
 
-                if (api.Route.Defaults.ContainsKey("Base") ||
-                    apiControllerName.ToUpper().Equals("BASE"))
-                    continue;
-
-                if (apiControllerName.ToUpper().Equals("ADMIN"))
-                    continue;
-
-                if (apiControllerName.ToUpper().Equals("DEFAULT"))
-                    continue;
-
-                if (apiControllerName.ToUpper().Equals("DEVICE"))
-                    continue;
+                //if ((actionContext.ActionDescriptor as ReflectedHttpActionDescriptor).MethodInfo.GetCustomAttributes(true)[0].ToString().Contains("Restricted"))
+                //    continue;
 
                 // Make sure we only report the current controller docs
                 if (!apiControllerName.Equals(actionContext.ControllerContext.ControllerDescriptor.ControllerName))
@@ -72,7 +62,8 @@ namespace Swagger.Net
                 ResourceApi rApi = SwaggerGen.CreateResourceApi(api);
                 r.apis.Add(rApi);
 
-                ResourceApiOperation rApiOperation = SwaggerGen.CreateResourceApiOperation(api, docProvider);
+                ResourceApiOperation rApiOperation = SwaggerGen.CreateResourceApiOperation(api, docProvider, 
+                    actionContext.ControllerContext.ControllerDescriptor);
                 rApi.operations.Add(rApiOperation);
 
                 foreach (var param in api.ParameterDescriptions)
