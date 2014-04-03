@@ -14,6 +14,7 @@ namespace Swagger.Net
         public const string SWAGGER_VERSION = "2.0";
         public const string FROMURI = "FromUri";
         public const string FROMBODY = "FromBody";
+        public const string FROMUNKNOWN = "Unknown";
         public const string QUERY = "query";
         public const string PATH = "path";
         public const string BODY = "body";
@@ -127,7 +128,8 @@ namespace Swagger.Net
         /// <returns>An operation parameter</returns>
         public static ResourceApiOperationParameter CreateResourceApiOperationParameter(ApiDescription api, ApiParameterDescription param, XmlCommentDocumentationProvider docProvider)
         {
-            string paramType = (param.Source.ToString().Equals(FROMURI)) ? QUERY : BODY;
+            string paramType = (param.Source.ToString().Equals(FROMURI) || 
+                param.Source.ToString().Equals(FROMUNKNOWN)) ? QUERY : BODY;
             ResourceApiOperationParameter parameter = new ResourceApiOperationParameter()
             {
                 paramType = (paramType == "query" && api.RelativePath.IndexOf("{" + param.Name + "}") > -1) ? PATH : paramType,
