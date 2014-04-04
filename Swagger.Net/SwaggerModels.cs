@@ -132,7 +132,9 @@ namespace Swagger.Net
                 param.Source.ToString().Equals(FROMUNKNOWN)) ? QUERY : BODY;
             ResourceApiOperationParameter parameter = new ResourceApiOperationParameter()
             {
-                paramType = (paramType == "query" && api.RelativePath.IndexOf("{" + param.Name + "}") > -1) ? PATH : paramType,
+                paramType = (paramType == "query" && 
+                             api.RelativePath.IndexOf("{" + param.Name + "}") > -1 && 
+                             param.ParameterDescriptor.DefaultValue == null) ? PATH : paramType,
                 name = param.Name,
                 description = param.Documentation,
                 dataType = param.ParameterDescriptor.ParameterType.Name,
