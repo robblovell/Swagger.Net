@@ -8,6 +8,7 @@ using System.Web.Http.Description;
 
 namespace Swagger.Net
 {
+    
     public static class SwaggerGen
     {
         public const string SWAGGER = "swagger";
@@ -18,8 +19,7 @@ namespace Swagger.Net
         public const string QUERY = "query";
         public const string PATH = "path";
         public const string BODY = "body";
-        //TODO:: move this to configuration or metadata.
-        public const string API_VERSION = "0.0.1";
+        public static string API_VERSION = Assembly.GetCallingAssembly().GetName().Version.ToString();
 
         /// <summary>
         /// Create a resource listing
