@@ -19,7 +19,7 @@ namespace Swagger.Net
         public const string QUERY = "query";
         public const string PATH = "path";
         public const string BODY = "body";
-        public static string API_VERSION = "0.4.0.0";// this doesn't work: Assembly.GetCallingAssembly().GetName().Version.ToString();
+        public static string API_VERSION = "0.4.1.0";// this doesn't work: Assembly.GetCallingAssembly().GetName().Version.ToString();
 
         /// <summary>
         /// Create a resource listing
