@@ -24,6 +24,7 @@ namespace Swagger.Net
             //TODO:: move this to configuration or metadata.
             uniqueControllers.Add("Base");
             uniqueControllers.Add("Default");
+            uniqueControllers.Add("MojioCommand");
 
             foreach (var api in GlobalConfiguration.Configuration.Services.GetApiExplorer().ApiDescriptions)
             {
