@@ -25,6 +25,11 @@ namespace Swagger.Net
             uniqueControllers.Add("Base");
             uniqueControllers.Add("Default");
             uniqueControllers.Add("MojioCommand");
+            uniqueControllers.Add("Sms");
+            uniqueControllers.Add("Observe");
+            uniqueControllers.Add("SimCards");
+            uniqueControllers.Add("Subscriptions");
+            uniqueControllers.Add("Admin");
 
             foreach (var api in GlobalConfiguration.Configuration.Services.GetApiExplorer().ApiDescriptions)
             {
