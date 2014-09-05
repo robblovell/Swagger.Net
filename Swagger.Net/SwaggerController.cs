@@ -27,6 +27,7 @@ namespace Swagger.Net
             uniqueControllers.Add("MojioCommand");
             uniqueControllers.Add("Sms");
             uniqueControllers.Add("Observe");
+            uniqueControllers.Add("Observer");
             uniqueControllers.Add("SimCards");
             uniqueControllers.Add("Subscriptions");
             uniqueControllers.Add("Admin");
