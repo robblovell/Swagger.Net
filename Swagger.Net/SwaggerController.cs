@@ -25,6 +25,7 @@ namespace Swagger.Net
             uniqueControllers.Add("Base");
             uniqueControllers.Add("Default");
             uniqueControllers.Add("MojioCommand");
+            uniqueControllers.Add("MojioUpdate");
             uniqueControllers.Add("Sms");
             uniqueControllers.Add("Observe");
             uniqueControllers.Add("Observer");
